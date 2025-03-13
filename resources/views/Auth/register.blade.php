@@ -7,7 +7,7 @@
         <title>Register Page</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
         <style>
             html, body {
@@ -16,6 +16,7 @@
                 overflow: hidden;
             }
         </style>
+
     </head>
     <body style="background: url('background_image.jpg') no-repeat center center/cover ;">
         <div class="row justify-content-center mt-3">
@@ -42,15 +43,44 @@
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label fw-bold" style="color: White;">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password" name="password" 
+                                        minlength="8" maxlength="20" 
+                                        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$"
+                                        required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye-slash"></i> 
+                                    </button>
+                            </div>
+                                <small class="text-warning">Your password must be 8-20 characters long and contain at least one letter, one number, and one special character.</small>
                             </div>
                             <div class="mt-3 d-flex justify-content-center">
-                            <button type="submit" class="btn btn-outline-success">Register</button>
+                                <button type="submit" class="btn btn-outline-success">Register</button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <p style="color: White;">Don't have an account?<a href="{{route('login')}}" style="color: White;">Register</a></p>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            document.getElementById("togglePassword").addEventListener("click", function() {
+                const passwordInput = document.getElementById("password");
+                const icon = this.querySelector("i");
+
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    icon.classList.remove("bi-eye-slash");
+                    icon.classList.add("bi-eye");
+                } else {
+                    passwordInput.type = "password";
+                    icon.classList.remove("bi-eye");
+                    icon.classList.add("bi-eye-slash");
+                }
+            });
+        </script>
     </body>
 </html>
