@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function register(){
-        return view('Auth\register');
+        return view('Auth.register');
     }
     public function registerPost(Request $request){
         $user = new User();
@@ -18,5 +18,8 @@ class AuthController extends Controller
         $user->password=Hash::make($request->password);
         $user->save();
         return back()->with('success','Register successfully');
+    }
+    public function login(){
+        return view('Auth.login');
     }
 }
