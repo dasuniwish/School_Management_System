@@ -31,7 +31,7 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
-                        <form action="{{route('register')}}" method="post">
+                        <form action="{{route('register')}}" method="POST">
                             @csrf
                             <div class="mb-3 ">
                                 <label for="name" class="form-label fw-bold" style="color: White;">Name</label>
@@ -58,7 +58,7 @@
                                 <button type="submit" class="btn btn-outline-success">Register</button>
                             </div>
                             <div class="text-center mt-3">
-                                <p style="color: White;">Don't have an account?<a href="{{route('login')}}" style="color: White;">Register</a></p>
+                                <p style="color: White;">Already have an account?<a href="{{route('login')}}" style="color: White;">Login</a></p>
                             </div>
                         </form>
                     </div>
