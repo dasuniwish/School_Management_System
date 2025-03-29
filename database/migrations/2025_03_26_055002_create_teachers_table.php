@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->string('user_id');
+            $table->string('name');
+            $table->string('email');
             $table->enum('gender', ['male', 'female', 'other']);
             $table->string('phone');
             $table->date('dateofbirth');
