@@ -15,7 +15,7 @@ class TeachersController extends Controller
      */
     public function index()
     {
-        $teachers = Teachers::all(); // Fetch all teachers from the database
+        $teachers = Teachers::all(); 
         return view('Teacher.index', compact('teachers'));
     }
 
@@ -33,27 +33,27 @@ class TeachersController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'name'              => 'required|string|max:255',
-        'email'             => 'required|string|email|max:255|unique:teachers',
-        'gender'            => 'required|string',
-        'phone'             => 'required|string|max:255',
-        'dateofbirth'       => 'required',
-        'current_address'   => 'required|string|max:255',
-        'permanent_address' => 'required|string|max:255',
-        'user_id'          => 'required|string|unique:teachers,user_id', 
-    ]);
-    
-    $data = $request->all();
-    $data['dateofbirth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->dateofbirth)->format('Y-m-d');
-    $lastTeacher = Teachers::latest('id')->first();
-    $data['user_id'] = $lastTeacher ? 'T' . ($lastTeacher->id + 1) : 'T1';
-    
-    Teachers::create($data);
+    {
+        $request->validate([
+            'name'              => 'required|string|max:255',
+            'email'             => 'required|string|email|max:255|unique:teachers',
+            'gender'            => 'required|string',
+            'phone'             => 'required|string|max:255',
+            'dateofbirth'       => 'required',
+            'current_address'   => 'required|string|max:255',
+            'permanent_address' => 'required|string|max:255',
+            'user_id'          => 'required|string|unique:teachers,user_id', 
+        ]);
+        
+        $data = $request->all();
+        $data['dateofbirth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->dateofbirth)->format('Y-m-d');
+        $lastTeacher = Teachers::latest('id')->first();
+        $data['user_id'] = $lastTeacher ? 'T' . ($lastTeacher->id + 1) : 'T1';
+        
+        Teachers::create($data);
 
-    return redirect()->route('teachers.index')->with('success', "Teacher added successfully");
-}
+        return redirect()->route('teachers.index')->with('success', "Teacher added successfully");
+    }
 
 
     /**
@@ -69,7 +69,8 @@ class TeachersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $teachers = Teachers::findOrFail($id); 
+        return view('Teacher.edit', compact('teachers'));
     }
 
     /**
@@ -77,14 +78,34 @@ class TeachersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name'              => 'required|string|max:255',
+            'email'             => 'required|string|email|max:255|unique:teachers,email,' . $id,
+            'gender'            => 'required|string',
+            'phone'             => 'required|string|max:255',
+            'dateofbirth'       => 'required', 
+            'current_address'   => 'required|string|max:255',
+            'permanent_address' => 'required|string|max:255',
+        ]);
+
+        $teacher = Teachers::findOrFail($id); 
+        $data = $request->all();
+        $data['dateofbirth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->dateofbirth)->format('Y-m-d');
+
+        $teacher->update($data); 
+
+        return redirect()->route('teachers.index')->with('success', "Teacher updated successfully");
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $teacher = Teachers::findOrFail($id); 
+        $teacher->delete(); 
+
+        return redirect()->route('teachers.index')->with('success', "Teacher deleted successfully");
     }
 }
