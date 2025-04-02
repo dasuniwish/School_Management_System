@@ -43,7 +43,7 @@
         @if($teachers -> count() > 0)
             @foreach($teachers as $t)
                 <tr>
-                    <td class="align-middle">{{ $t -> user_id }}</td>
+                    <td class="align-middle">{{ $t -> teacher_id }}</td>
                     <td class="align-middle">{{ $t -> name }}</td>
                     <td class="align-middle">{{ $t -> email }}</td>
                     <td class="align-middle">{{ $t -> phone }}</td>

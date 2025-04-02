@@ -19,7 +19,7 @@ class AuthController extends Controller
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
         $user->save();
-        return redirect('/teacher')->with('success','Register successfully');
+        return redirect('/teachers')->with('success','Register successfully');
     }
 
     public function login(){

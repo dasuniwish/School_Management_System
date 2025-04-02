@@ -18,8 +18,8 @@
             @csrf
             <div class="mb-3">
                 <label class="form-label text-dark fw-bold">Teacher ID</label>
-                <input name="user_id" class="form-control" type="text" value="{{ old('user_id', $user_id ?? '') }}" readonly>
-                @error('user_id')
+                <input name="teacher_id" class="form-control" type="text" value="{{ old('teacher_id', $teacher_id ?? '') }}" readonly>
+                @error('teacher_id')
                     <p class="text-danger text-sm">{{ $message }}</p>
                 @enderror
             </div>
