@@ -25,8 +25,8 @@ class TeachersController extends Controller
     public function create()
     {
         $lastTeacher = Teachers::latest('id')->first();
-        $user_id = $lastTeacher ? 'T' . ($lastTeacher->id + 1) : 'T1';
-        return view('Teacher.create', compact('user_id'));
+        $teacher_id = $lastTeacher ? 'T' . ($lastTeacher->id + 1) : 'T1';
+        return view('Teacher.create', compact('teacher_id'));
     }
 
     /**
@@ -42,13 +42,13 @@ class TeachersController extends Controller
             'dateofbirth'       => 'required',
             'current_address'   => 'required|string|max:255',
             'permanent_address' => 'required|string|max:255',
-            'user_id'          => 'required|string|unique:teachers,user_id', 
+            'teacher_id' => 'nullable|string|unique:teachers,teacher_id',
         ]);
         
         $data = $request->all();
         $data['dateofbirth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->dateofbirth)->format('Y-m-d');
         $lastTeacher = Teachers::latest('id')->first();
-        $data['user_id'] = $lastTeacher ? 'T' . ($lastTeacher->id + 1) : 'T1';
+        $data['teacher_id'] = $lastTeacher ? 'T' . ($lastTeacher->id + 1) : 'T1';
         
         Teachers::create($data);
 
@@ -70,6 +70,7 @@ class TeachersController extends Controller
     public function edit(string $id)
     {
         $teachers = Teachers::findOrFail($id); 
+        $teachers->dateofbirth = \Carbon\Carbon::parse($teachers->dateofbirth)->format('d/m/Y'); 
         return view('Teacher.edit', compact('teachers'));
     }
 
@@ -91,7 +92,6 @@ class TeachersController extends Controller
         $teacher = Teachers::findOrFail($id); 
         $data = $request->all();
         $data['dateofbirth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->dateofbirth)->format('Y-m-d');
-
         $teacher->update($data); 
 
         return redirect()->route('teachers.index')->with('success', "Teacher updated successfully");
