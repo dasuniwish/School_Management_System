@@ -15,8 +15,12 @@ class SubjectsController extends Controller
      */
     public function index()
     {
-        $subjects = Subjects::all(); 
-        return view('Subject.index', compact('subjects'));
+        $subjects = DB::table('subjects')
+        ->join('teachers', 'subjects.teacher_id', '=', 'teachers.teacher_id')
+        ->select('subjects.*', 'teachers.name as teacher_name') // Select subject fields and teacher name
+        ->get();
+    
+    return view('Subject.index', compact('subjects'));
     }
 
     /**
@@ -64,7 +68,10 @@ class SubjectsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $subjects = Subjects::findOrFail($id); 
+        $teachers = DB::table('teachers')->pluck('name', 'teacher_id'); 
+    
+        return view('Subject.edit', compact('subjects', 'teachers')); 
     }
 
     /**
@@ -72,14 +79,35 @@ class SubjectsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+    $subject = Subjects::findOrFail($id);
+
+        $request->validate([
+            'subject_code' => 'required|unique:subjects,subject_code,' . $id,
+            'subject_name' => 'required',
+            'teacher_id' => 'required|exists:teachers,teacher_id',
+            'description' => 'nullable|string',
+        ]);
+
+        $subject->update([
+            'subject_code' => $request->subject_code,
+            'subject_name' => $request->subject_name,
+            'teacher_id' => $request->teacher_id,
+            'description' => $request->description ?? '',
+        ]);
+
+        return redirect()->route('subjects.index')->with('success', 'Subject updated successfully');
     }
+    
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $subject = Subjects::findOrFail($id); 
+        $subject->delete(); 
+
+        return redirect()->route('subjects.index')->with('success', "Subject deleted successfully");
     }
 }
