@@ -16,11 +16,10 @@ class SubjectsController extends Controller
     public function index()
     {
         $subjects = DB::table('subjects')
-        ->join('teachers', 'subjects.teacher_id', '=', 'teachers.teacher_id')
-        ->select('subjects.*', 'teachers.name as teacher_name') // Select subject fields and teacher name
-        ->get();
-    
-    return view('Subject.index', compact('subjects'));
+            ->join('teachers', 'subjects.teacher_id', '=', 'teachers.teacher_id')
+            ->select('subjects.*', 'teachers.name as teacher_name') // Select subject fields and teacher name
+            ->get();
+        return view('Subject.index', compact('subjects'));
     }
 
     /**

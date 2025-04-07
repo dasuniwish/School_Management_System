@@ -18,5 +18,10 @@ class Teachers extends Model
         'current_address',
         'permanent_address',
     ];
+    public function subjects()
+{
+    return $this->hasMany(\App\Models\Subjects::class, 'teacher_id', 'teacher_id');
+}
+
 
 }
