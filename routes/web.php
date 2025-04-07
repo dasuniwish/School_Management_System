@@ -19,7 +19,7 @@ use App\Http\Controllers\SubjectsController;
 */
 
 Route::get('/', function () {
-    return redirect('/register');
+    return redirect('/login');
 });
 
 

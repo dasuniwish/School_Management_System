@@ -47,7 +47,13 @@
                     <td class="align-middle">{{ $t -> name }}</td>
                     <td class="align-middle">{{ $t -> email }}</td>
                     <td class="align-middle">{{ $t -> phone }}</td>
-                    <td class="align-middle">{{ $t -> phone }}</td>
+                    <td class="align-middle">
+                        @if($t->subjects->count() > 0)
+                            {{ $t->subjects->pluck('subject_code')->implode(', ') }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('teachers.edit', $t->id) }}" class="btn btn-light btn-sm">
                             <i class="bi bi-pencil"></i>
