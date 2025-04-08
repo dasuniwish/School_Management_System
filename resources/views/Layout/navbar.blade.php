@@ -21,7 +21,7 @@
             <a class="nav-link active" aria-current="page" href="{{ route('subjects.index') }}"><i class="bi bi-book-half"></i>&nbsp;Subjects</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-people-fill"></i>&nbsp;Classes</a>
+            <a class="nav-link active" aria-current="page" href="{{ route('classes.index') }}#"><i class="bi bi-people-fill"></i>&nbsp;Classes</a>
           </li>
         </ul>
       </div>

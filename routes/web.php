@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\ClassesController;
 
 
 /*
@@ -34,6 +35,7 @@ Route::get('/home', [HomeController::class,'index']);
 
 Route::resource('teachers', TeachersController::class);
 Route::resource('subjects', SubjectsController::class);
+Route::resource('classes', ClassesController::class);
 
 
   
