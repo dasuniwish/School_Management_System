@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Classes;
+use App\Models\Subjects;
 
 class ClassesController extends Controller
 {
@@ -105,4 +106,27 @@ class ClassesController extends Controller
 
         return redirect()->route('classes.index')->with('success', "Class deleted successfully");
     }
+    
+    public function assignSubjects($id)
+    {
+        $class = Classes::findOrFail($id);
+        $subjects = Subjects::all();
+        $assigned = $class->subjects->pluck('id')->toArray();
+
+        return view('Class.assign_subjects', compact('class', 'subjects', 'assigned'));
+    }
+
+    public function storeAssignedSubjects(Request $request, $classId)
+    {
+        $class = Classes::findOrFail($classId);
+        $validated = $request->validate([
+            'subjects' => 'array',
+            'subjects.*' => 'exists:subjects,id',
+        ]);
+
+        $class->subjects()->sync($validated['subjects']);
+
+        return redirect()->route('classes.index')->with('success', 'Subjects assigned successfully!');
+    }
+
 }
