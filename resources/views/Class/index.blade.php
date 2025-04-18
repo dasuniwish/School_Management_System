@@ -61,6 +61,8 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            <a href="{{ route('classes.assignSubjects', $c->id) }}" class="btn btn-sm btn-success">Assign Subjects</a>
+
                         </td>
                     </tr>
                 @endforeach 

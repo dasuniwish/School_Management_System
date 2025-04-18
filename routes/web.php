@@ -36,6 +36,8 @@ Route::get('/home', [HomeController::class,'index']);
 Route::resource('teachers', TeachersController::class);
 Route::resource('subjects', SubjectsController::class);
 Route::resource('classes', ClassesController::class);
+Route::get('classes/{id}/assign-subjects', [ClassesController::class, 'assignSubjects'])->name('classes.assignSubjects');
+Route::post('classes/{id}/assign-subjects', [ClassesController::class, 'storeAssignedSubjects'])->name('classes.storeAssignedSubjects');
 
 
   
