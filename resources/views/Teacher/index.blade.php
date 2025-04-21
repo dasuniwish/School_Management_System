@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .bg-darkgray {
-        background-color: #c9d1cf; 
+        background-color: #0047b3; 
     }
 </style>
 <div class="d-flex align-items-center justify-content-between p-3 bg-darkgray rounded">
@@ -28,9 +28,9 @@
 @endif
 
 <div>
-    <table class="table table-light table-striped-columns">
+    <table class="table table-light">
         <thead>
-            <tr class="table-dark">
+            <tr class="table-primary">
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>

@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .bg-darkgray {
-        background-color: #c9d1cf; /* Dark Gray */
+        background-color: #0047b3; /* Dark Gray */
     }
 </style>
 <div class="d-flex align-items-center justify-content-between p-3 bg-darkgray rounded">

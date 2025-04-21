@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .bg-darkgray {
-        background-color: #c9d1cf; 
+        background-color: #0047b3; 
     }
 </style>
 <div class="d-flex align-items-center justify-content-between p-3 bg-darkgray rounded">
@@ -27,9 +27,9 @@
 @endif
 
 <div>
-    <table class="table table-light table-striped-columns">
+    <table class="table table-light ">
         <thead>
-            <tr class="table-dark">
+            <tr class="table-primary">
                 <th scope="col">#</th>
                 <th scope="col">Class Name</th>
                 <th scope="col">Students</th> 
@@ -61,7 +61,7 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
-                            <a href="{{ route('classes.assignSubjects', $c->id) }}" class="btn btn-sm btn-success">Assign Subjects</a>
+                            <a href="{{ route('classes.assignSubjects', $c->id) }}" class="btn btn-sm btn-primary">Assign Subjects</a>
 
                         </td>
                     </tr>

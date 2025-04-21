@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .bg-darkgray {
-        background-color: #c9d1cf;
+        background-color: #0047b3;
     }
 </style>
 
