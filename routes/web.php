@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\StudentsController;
+
 
 
 /*
@@ -38,6 +40,7 @@ Route::resource('subjects', SubjectsController::class);
 Route::resource('classes', ClassesController::class);
 Route::get('classes/{id}/assign-subjects', [ClassesController::class, 'assignSubjects'])->name('classes.assignSubjects');
 Route::post('classes/{id}/assign-subjects', [ClassesController::class, 'storeAssignedSubjects'])->name('classes.storeAssignedSubjects');
+Route::resource('students', StudentsController::class);
 
 
   
