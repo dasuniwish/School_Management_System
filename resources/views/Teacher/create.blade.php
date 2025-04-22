@@ -12,58 +12,62 @@
     <i class="bi bi-arrow-left"></i>&nbsp;Back
     </a>
 </div>
-<div class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="p-4 bg-light rounded shadow" style="width: 400px;">
+<div class="d-flex justify-content-center align-items-center mt-3">
+    <div class="p-4 bg-light rounded shadow" style="width: 700px;">
         <form action="{{ route('teachers.store') }}" method="POST" class="w-100 px-4 py-4" enctype="multipart/form-data">
             @csrf
-            <div class="mb-3">
-                <label class="form-label text-dark fw-bold">Teacher ID</label>
-                <input name="teacher_id" class="form-control" type="text" value="{{ old('teacher_id', $teacher_id ?? '') }}" readonly>
-                @error('teacher_id')
-                    <p class="text-danger text-sm">{{ $message }}</p>
-                @enderror
+            <div class="mb-3 d-flex gap-3">
+                <div class="w-25">
+                    <label class="form-label text-dark fw-bold">Teacher ID</label>
+                    <input name="teacher_id" class="form-control" type="text" value="{{ old('teacher_id', $teacher_id ?? '') }}" readonly>
+                    @error('teacher_id')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="w-75">
+                    <label class="form-label text-dark fw-bold">Name</label>
+                    <input name="name" class="form-control" type="text" value="{{ old('name') }}">
+                    @error('name')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label text-dark fw-bold">Name</label>
-                <input name="name" class="form-control" type="text" value="{{ old('name') }}">
-                @error('name')
-                    <p class="text-danger text-sm">{{ $message }}</p>
-                @enderror
+            <div class="mb-3 d-flex gap-3">
+                <div class="w-25">
+                    <label class="form-label text-dark fw-bold">Gender</label>
+                    <select name="gender" class="form-control">
+                        <option value="" selected disabled>Select Gender</option>
+                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                        <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                    </select>
+                    @error('gender')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="w-75">
+                    <label class="form-label text-dark fw-bold">Email</label>
+                        <input name="email" class="form-control" type="email" value="{{ old('email') }}">
+                        @error('email')
+                            <p class="text-danger text-sm">{{ $message }}</p>
+                        @enderror
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label text-dark fw-bold">Email</label>
-                <input name="email" class="form-control" type="email" value="{{ old('email') }}">
-                @error('email')
-                    <p class="text-danger text-sm">{{ $message }}</p>
-                @enderror
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label text-dark fw-bold">Gender</label>
-                <select name="gender" class="form-control">
-                    <option value="" selected disabled>Select Gender</option>
-                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                    <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
-                </select>
-                @error('gender')
-                    <p class="text-danger text-sm">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label class="form-label text-dark fw-bold">Phone Number</label>
-                <input name="phone" class="form-control" type="text" value="{{ old('phone') }}">
-                @error('phone')
-                    <p class="text-danger text-sm">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label class="form-label text-dark fw-bold">Date of Birth</label>
-                <input name="dateofbirth" class="form-control datepicker" id="datepicker-tc" autocomplete="off" type="text" >
-                @error('dateofbirth')
-                    <p class="text-danger text-sm">{{ $message }}</p>
-                @enderror
+            <div class="mb-3 d-flex gap-3">
+                <div class="w-25">
+                    <label class="form-label text-dark fw-bold">Date of Birth</label>
+                    <input name="dateofbirth" class="form-control datepicker" id="datepicker-tc" autocomplete="off" type="text" >
+                    @error('dateofbirth')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="w-75">
+                    <label class="form-label text-dark fw-bold">Phone Number</label>
+                    <input name="phone" class="form-control" type="text" value="{{ old('phone') }}">
+                    @error('phone')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label text-dark fw-bold">Current Address</label>

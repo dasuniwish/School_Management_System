@@ -19,7 +19,7 @@
             <a class="nav-link text-white" href="{{ route('teachers.index') }}"><i class="bi bi-person"></i>&nbsp;Teachers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('classes.index') }}"><i class="bi bi-mortarboard-fill"></i>&nbsp;Students</a>
+            <a class="nav-link text-white" href="{{ route('students.index') }}"><i class="bi bi-mortarboard-fill"></i>&nbsp;Students</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="{{ route('subjects.index') }}"><i class="bi bi-book-half"></i>&nbsp;Subjects</a>

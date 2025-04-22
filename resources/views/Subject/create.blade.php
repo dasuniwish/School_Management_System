@@ -51,8 +51,6 @@
                     <p class="text-danger text-sm">{{ $message }}</p>
                 @enderror
             </div>
-
-           
             <button type="submit" class="btn btn-secondary w-100">Submit</button>
         </form>
     </div>
