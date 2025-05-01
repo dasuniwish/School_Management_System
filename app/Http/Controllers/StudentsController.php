@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Classes;
 use App\Models\Students;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class StudentsController extends Controller
 {
@@ -12,7 +15,11 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('Student.index');
+        $students = DB::table('students')
+        ->join('classes', 'students.class_id', '=', 'classes.id')
+        ->select('students.*', 'classes.class_name as class_name') // Select subject fields and teacher name
+        ->get();
+    return view('Student.index', compact('students'));
 
     }
 
@@ -69,7 +76,8 @@ class StudentsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $student = Students::findOrFail($id); // find student by ID or fail
+        return view('Student.parent_details', compact('student'));
     }
 
     /**

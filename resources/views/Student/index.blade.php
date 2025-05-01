@@ -31,16 +31,45 @@
     <table class="table table-light">
         <thead>
             <tr class="table-primary">
-            <th scope="col">ID</th>
+            <th scope="col">Student ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Email</th>
+            <th scope="col">Class</th>
             <th scope="col">Phone Number</th>
-            <th scope="col">Subject Code</th>
+            <th scope="col">Current Address</th>
             <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-      
+            @if($students -> count() > 0)
+                @foreach($students as $s)
+                    <tr>
+                        <td class="align-middle"><a href="{{ route('students.show', $s->id) }}">
+                            {{ $s->student_id }}
+                        </a></td>
+                        <td class="align-middle">{{ $s -> student_name }}</td>
+                        <td class="align-middle">{{ $s -> class_name }}</td>   
+                        <td class="align-middle">{{ $s -> phone }}</td>                    
+                        <td class="align-middle">{{ $s -> current_address }}</td>
+                        <td>
+                            <a href="{{ route('students.edit', $s->id) }}" class="btn btn-light btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            &nbsp;
+                            <form action="{{ route('students.destroy', $s->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-light btn-sm" onclick="return confirm('Are you sure you want to delete this teacher?');">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach 
+            @else
+                    <tr>
+                        <td class="text-center" colspan="5">Teachers not registerd</td>
+                    </tr>
+            @endif  
         </tbody>
     </table>
 </div>
