@@ -31,6 +31,13 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
+                        @if ($errors->any())
+                            <div>
+                                @foreach ($errors->all() as $error)
+                                    <p style="color:red;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <form action="{{route('register')}}" method="POST">
                             @csrf
                             <div class="mb-3 ">
