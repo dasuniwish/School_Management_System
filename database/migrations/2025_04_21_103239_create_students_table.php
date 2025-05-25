@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female', 'other']);
             $table->string('phone');
             $table->date('dateofbirth');
-            $table->string('class_id');
+            $table->string('class_numeric');
             $table->string('current_address');
             $table->string('permanent_address');
             $table->string('mother_name');

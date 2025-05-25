@@ -14,7 +14,7 @@ class Students extends Model
         'gender',
         'phone',
         'dateofbirth',
-        'class_id',
+        'class_numeric',
         'current_address',
         'permanent_address',
         'mother_name',
@@ -27,4 +27,5 @@ class Students extends Model
         'guardian_phone',
         'guardian_address',
     ];
+    
 }
