@@ -1,19 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('Layout.app')
 
-        <title>Login Page</title>
+@section('content')
+<style>
+    .dashboard-box {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #f1f5f9;
+        text-align: center;
+        margin-top: 50px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .dashboard-number {
+        font-size: 48px;
+        font-weight: bold;
+        color: #0047b3;
+    }
+    .dashboard-label {
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: 10px;
+        color: #333;
+    }
+</style>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-        
-
-    </head>
-    <body style="background: url('background_image.jpg') no-repeat center center/cover ;">
-        <div class="row justify-content-center mt-3">
-            <h1>hh</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="dashboard-box">
+                <div class="dashboard-number">
+                    {{ $studentCount }}
+                </div>
+                <div class="dashboard-label">
+                    Total Students
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-    </body>
-</html>
+@endsection

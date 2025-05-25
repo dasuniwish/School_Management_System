@@ -63,10 +63,10 @@
                 </div> 
                 <div class="w-50">
                     <label class="form-label text-dark fw-bold">Class</label>
-                    <select name="class_id" class="form-control">
+                    <select name="class_numeric" class="form-control">
                         <option value="">Select a Class</option>
                         @foreach($classes as $class)
-                            <option value="{{ $class->id }}" {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                            <option value="{{ $class->class_numeric }}" {{ old('class_numeric') == $class->class_numeric ? 'selected' : '' }}>
                                 {{ $class->class_name }}
                             </option>
                         @endforeach

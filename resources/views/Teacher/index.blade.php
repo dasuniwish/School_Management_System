@@ -59,10 +59,10 @@
                             <i class="bi bi-pencil"></i>
                         </a>
                         &nbsp;
-                        <form action="{{ route('teachers.destroy', $t->id) }}" method="POST" style="display:inline;">
+                        <form id="delete-form-{{ $t->id }}" action="{{ route('teachers.destroy', $t->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-light btn-sm" onclick="return confirm('Are you sure you want to delete this teacher?');">
+                            <button type="button" class="btn btn-light btn-sm delete-btn" data-id="{{ $t->id }}">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -71,10 +71,34 @@
             @endforeach 
         @else
                 <tr>
-                    <td class="text-center" colspan="5">Teachers not registerd</td>
+                    <td class="text-center" colspan="6">Teachers not registerd</td>
                 </tr>
         @endif  
         </tbody>
     </table>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const studentId = this.getAttribute('data-id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    width: 400,
+                    height:100,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-form-${studentId}`).submit();
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </div>
 @endsection

@@ -45,7 +45,7 @@
                     <tr>
                         <td class="align-middle">{{ $c->class_numeric }}</td>
                         <td class="align-middle">{{ $c->class_name }}</td>
-                        <td class="align-middle">{{ $c->class_name }}</td> 
+                        <td class="align-middle">{{ $c->students_count }}</td> 
                         <td class="align-middle">{{ $c->class_name }}</td> 
                         <td class="align-middle">{{ $c->teacher_name }}</td> 
                         <td class="align-middle">{{ $c->class_description }}</td>
@@ -54,13 +54,13 @@
                                 <i class="bi bi-pencil"></i>
                             </a>
                             &nbsp;
-                            <form action="{{ route('classes.destroy', $c->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-light btn-sm" onclick="return confirm('Are you sure you want to delete this subject?');">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            <form id="delete-form-{{ $c->id }}" action="{{ route('classes.destroy', $c->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="btn btn-light btn-sm delete-btn" data-id="{{ $c->id }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
                             <a href="{{ route('classes.assignSubjects', $c->id) }}" class="btn btn-sm btn-primary">Assign Subjects</a>
 
                         </td>
@@ -68,10 +68,34 @@
                 @endforeach 
             @else
                 <tr>
-                    <td class="text-center" colspan="5">No subjects registered</td>
+                    <td class="text-center" colspan="7">Classes not registered</td>
                 </tr>
             @endif  
         </tbody>
     </table>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const studentId = this.getAttribute('data-id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    width: 400,
+                    height:100,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-form-${studentId}`).submit();
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </div>
 @endsection

@@ -14,12 +14,13 @@ class ClassesController extends Controller
      */
     public function index()
     {
-        $classes = DB::table('classes')
-        ->join('teachers', 'classes.teacher_id', '=', 'teachers.teacher_id')
-        ->select('classes.*', 'teachers.name as teacher_name') 
-        ->get();
-        return view('Class.index', compact('classes'));
+        $classes = Classes::withCount('students')
+            ->join('teachers', 'classes.teacher_id', '=', 'teachers.teacher_id')
+            ->addSelect('classes.*', 'teachers.name as teacher_name')
+            ->get();
+        return view('Class.index', compact('classes',));
     }
+    
 
     /**
      * Show the form for creating a new resource.

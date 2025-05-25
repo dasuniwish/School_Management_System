@@ -16,7 +16,7 @@ class StudentsController extends Controller
     public function index()
     {
         $students = DB::table('students')
-        ->join('classes', 'students.class_id', '=', 'classes.id')
+        ->join('classes', 'students.class_numeric', '=', 'classes.class_numeric')
         ->select('students.*', 'classes.class_name as class_name') // Select subject fields and teacher name
         ->get();
     return view('Student.index', compact('students'));
@@ -47,7 +47,7 @@ class StudentsController extends Controller
             'gender'            => 'required|string',
             'phone'             => 'required|string|max:255',
             'dateofbirth'       => 'required',
-            'class_id'          => 'required|exists:classes,id',
+            'class_numeric'          => 'required|exists:classes,class_numeric',
             'current_address'   => 'required|string|max:255',
             'permanent_address' => 'required|string|max:255',
             'mother_name'       => 'required|string|max:255',
@@ -101,6 +101,9 @@ class StudentsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $student = Students::findOrFail($id); 
+        $student->delete(); 
+
+        return redirect()->route('students.index')->with('success', "Student deleted successfully");
     }
 }
