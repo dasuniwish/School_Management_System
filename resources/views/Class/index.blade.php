@@ -46,7 +46,7 @@
                         <td class="align-middle">{{ $c->class_numeric }}</td>
                         <td class="align-middle">{{ $c->class_name }}</td>
                         <td class="align-middle">{{ $c->students_count }}</td> 
-                        <td class="align-middle">{{ $c->class_name }}</td> 
+                        <td class="align-middle"> {{ $c->subjects->pluck('subject_name')->implode(', ') }}</td> 
                         <td class="align-middle">{{ $c->teacher_name }}</td> 
                         <td class="align-middle">{{ $c->class_description }}</td>
                         <td>
