@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     // Show Register Page
-    public function register()
+   /* public function register()
     {
         return view('Auth.register');
     }
@@ -23,6 +23,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
+            'role' => 'required|in:admin,teacher,student',
         ], [
             'email.unique' => 'Email already exists.', 
             'email.required' => 'Email is required.',
@@ -30,6 +31,8 @@ class AuthController extends Controller
             'name.required' => 'Name is required.',
             'password.required' => 'Password is required.',
             'password.min' => 'Password must be at least 6 characters.',
+            'role.required' => 'Role is required.',
+
         ]);
     
         // Create new user
@@ -37,10 +40,12 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role = $request->role; 
         $user->save();
     
-        return redirect('/teachers')->with('success', 'Registered successfully');
-    }
+Auth::login($user);
+return redirect()->route('dashboard')->with('success', 'Welcome!');
+    }*/
     
 
     // Show Login Page
@@ -51,22 +56,18 @@ class AuthController extends Controller
 
     // Handle Login Form Submit
     public function loginPost(Request $request)
-    {
-        // Validate fields
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string',
+    ]);
 
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
+    $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            return redirect('/teachers')->with('success', 'Login successfully');
-        }
+    if (Auth::attempt($credentials)) {
+    return redirect()->route('dashboard')->with('success', 'Welcome!');
+}
+    return back()->with('error', 'Invalid email or password.');
+}
 
-        return back()->with('error', 'Invalid Email or Password');
-    }
 }

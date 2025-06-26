@@ -8,6 +8,7 @@ use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RolesController;
 
 
 
@@ -27,15 +28,14 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+Route::resource('roles', RolesController::class);
 
 
-Route::get('/register', [AuthController::class,'register'])->name('register');
-Route::post('/register', [AuthController::class,'registerPost'])->name('register');
 
 Route::get('/login', [AuthController::class,'login'])->name('login');
 Route::post('/login', [AuthController::class,'loginPost'])->name('login');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('teachers', TeachersController::class);
 Route::resource('subjects', SubjectsController::class);

@@ -49,9 +49,6 @@
                             <div class="mt-3 d-flex justify-content-center">
                                 <button type="submit" class="btn btn-outline-success">Login</button>
                             </div>
-                            <div class="text-center mt-3">
-                                <p style="color: White;">Don't have an account?<a href="{{route('register')}}" style="color: White;">Register</a></p>
-                            </div>
                         </form>
                     </div>
                 </div>
