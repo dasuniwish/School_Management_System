@@ -28,21 +28,23 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::resource('roles', RolesController::class);
-
-
-
 Route::get('/login', [AuthController::class,'login'])->name('login');
 Route::post('/login', [AuthController::class,'loginPost'])->name('login');
 
-Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
 
+Route::middleware(['auth'])->group(function () {
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('teachers', TeachersController::class);
 Route::resource('subjects', SubjectsController::class);
 Route::resource('classes', ClassesController::class);
 Route::get('classes/{id}/assign-subjects', [ClassesController::class, 'assignSubjects'])->name('classes.assignSubjects');
 Route::post('classes/{id}/assign-subjects', [ClassesController::class, 'storeAssignedSubjects'])->name('classes.storeAssignedSubjects');
 Route::resource('students', StudentsController::class);
-
+Route::resource('roles', RolesController::class);
+});
 
   

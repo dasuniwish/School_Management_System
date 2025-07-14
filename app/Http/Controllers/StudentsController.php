@@ -85,16 +85,64 @@ class StudentsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $student = Students::findOrFail($id);
+        $classes = Classes::all(); 
+        $student->dateofbirth = \Carbon\Carbon::parse($student->dateofbirth)->format('d/m/Y'); 
+        return view('Student.edit', compact('student', 'classes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
+{
+    $request->validate([
+        'student_name'      => 'required|string|max:255',
+        'gender'            => 'required|string',
+        'phone'             => 'required|string|max:255',
+        'dateofbirth'       => 'required',
+        'class_numeric'     => 'required|exists:classes,class_numeric',
+        'current_address'   => 'required|string|max:255',
+        'permanent_address' => 'required|string|max:255',
+        'mother_name'       => 'required|string|max:255',
+        'mother_phone'      => 'required|string|max:255',
+        'mother_address'    => 'required|string|max:255',
+        'father_name'       => 'required|string|max:255',
+        'father_phone'      => 'required|string|max:255',
+        'father_address'    => 'required|string|max:255',
+        'guardian_name'     => 'required|string|max:255',
+        'guardian_phone'    => 'required|string|max:255',
+        'guardian_address'  => 'required|string|max:255',
+    ]);
+
+    $student = Students::findOrFail($id);
+
+    // Convert date format
+    $formattedDate = \Carbon\Carbon::createFromFormat('d/m/Y', $request->dateofbirth)->format('Y-m-d');
+
+    // Update fields
+    $student->update([
+        'student_name'      => $request->student_name,
+        'gender'            => $request->gender,
+        'phone'             => $request->phone,
+        'dateofbirth'       => $formattedDate,
+        'class_numeric'     => $request->class_numeric,
+        'current_address'   => $request->current_address,
+        'permanent_address' => $request->permanent_address,
+        'mother_name'       => $request->mother_name,
+        'mother_phone'      => $request->mother_phone,
+        'mother_address'    => $request->mother_address,
+        'father_name'       => $request->father_name,
+        'father_phone'      => $request->father_phone,
+        'father_address'    => $request->father_address,
+        'guardian_name'     => $request->guardian_name,
+        'guardian_phone'    => $request->guardian_phone,
+        'guardian_address'  => $request->guardian_address,
+    ]);
+
+    return redirect()->route('students.index')->with('success', 'Student updated successfully!');
+}
+
 
     /**
      * Remove the specified resource from storage.
