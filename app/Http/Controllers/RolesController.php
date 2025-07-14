@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-         $users = User::all();
+        $users = User::paginate(10);
         return view('Roles.index', compact('users'));
     }
 
@@ -22,7 +23,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-         return view('Roles.create');
+        return view('Roles.create');
     }
 
     /**
@@ -30,7 +31,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => [
@@ -54,16 +55,7 @@ class RolesController extends Controller
         $user->save();
 
         Session::flash('success', 'User registered successfully!');
-        return redirect()->route('roles.create');
-    
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -71,7 +63,8 @@ class RolesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('roles.edit', compact('user'));
     }
 
     /**
@@ -79,7 +72,27 @@ class RolesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|in:admin,teacher,student',
+            'password' => 'nullable|string|min:8|max:20|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/',
+        ], [
+            'password.regex' => 'Password must include a letter, a number and a special character.',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('roles.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -87,6 +100,9 @@ class RolesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('roles.index')->with('success', 'User deleted successfully.');
     }
 }

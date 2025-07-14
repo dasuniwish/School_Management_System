@@ -18,7 +18,7 @@ class StudentsController extends Controller
         $students = DB::table('students')
         ->join('classes', 'students.class_numeric', '=', 'classes.class_numeric')
         ->select('students.*', 'classes.class_name as class_name') // Select subject fields and teacher name
-        ->get();
+        ->paginate(10);
     return view('Student.index', compact('students'));
 
     }

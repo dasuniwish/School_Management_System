@@ -28,7 +28,7 @@
             <a class="nav-link text-white" href="{{ route('students.index') }}"><i class="bi bi-mortarboard-fill"></i>&nbsp;Students</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('roles.index') }}"><i class="bi bi-mortarboard-fill"></i>&nbsp;Role</a>
+            <a class="nav-link text-white" href="{{ route('roles.index') }}"><i class="bi bi-person-fill-add"></i>&nbsp;Assign Role</a>
           </li>
         </ul>
       </div>

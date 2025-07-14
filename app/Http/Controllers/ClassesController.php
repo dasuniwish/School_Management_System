@@ -17,7 +17,8 @@ class ClassesController extends Controller
         $classes = Classes::withCount('students')
             ->join('teachers', 'classes.teacher_id', '=', 'teachers.teacher_id')
             ->addSelect('classes.*', 'teachers.name as teacher_name')
-            ->get();
+            ->paginate(10);
+            
         return view('Class.index', compact('classes',));
     }
     
