@@ -72,6 +72,23 @@
             @endif  
         </tbody>
     </table>
+     <div class="mt-4 d-flex justify-content-center">
+    <style>
+        /* Make all pagination text black */
+        .pagination li a, .pagination li span {
+            color: #000 !important;
+        }
+        /* Make the active page background black and text white */
+        .pagination .active span,
+        .pagination li.active span {
+            background-color: #000 !important;
+            color: #fff !important;
+            border-color: #000 !important;
+        }
+        
+    </style>
+    {{ $students->links() }}
+</div>
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.delete-btn').forEach(button => {

@@ -1,83 +1,71 @@
-@extends('Layout.app') <!-- Adjust if your layout is different -->
+@extends('Layout.app')
 
 @section('content')
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>User Registration</h4>
-                </div>
-                <div class="card-body bg-dark text-white">
-
-                    @if(Session::has('success'))
-                        <div class="alert alert-success">
-                            {{ Session::get('success') }}
-                        </div>
-                    @endif
-
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form action="{{ route('roles.store') }}" method="POST">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Role</label>
-                            <select name="role" class="form-control" required>
-                                <option value="">-- Select Role --</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Teacher</option>
-                                <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <div class="input-group">
+<style>
+    .bg-darkgray {
+        background-color: #0047b3; 
+    }
+</style>
+<div class="d-flex align-items-center justify-content-between p-3 bg-darkgray rounded">
+    <h3 class="mb-0">Add New User & Assign Role</h3>
+    <a href="{{route('roles.index')}}" class="btn btn-secondary d-flex align-items-center">
+    <i class="bi bi-arrow-left"></i>&nbsp;Back
+    </a>
+</div>
+<div class="d-flex justify-content-center align-items-center mt-3">
+    <div class="p-4 bg-light rounded shadow" style="width: 500px;">
+        <form action="{{ route('roles.store') }}" method="POST" class="w-100 px-4 py-4" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                    <label class="form-label text-dark fw-bold">Name</label>
+                    <input name="name" class="form-control" type="text" value="{{ old('name') }}" >
+                    @error('name')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+            </div>
+             <div class="mb-3">
+                    <label class="form-label text-dark fw-bold">Email</label>
+                    <input name="email" class="form-control" type="text" value="{{ old('email') }}" >
+                    @error('email')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+            </div>
+                 <div class="mb-3">
+                    <label class="form-label text-dark fw-bold">Role</label>
+                    <select name="role" class="form-control">
+                        <option value="" selected disabled>Select Role</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Teacher</option>
+                        <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
+                    </select>
+                    @error('role')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
+            </div>
+                <div class="mb-3">
+                    <label class="form-label text-dark fw-bold">Password</label>
+                   
+           <div class="input-group">
                                 <input type="password" name="password" id="password" class="form-control"
                                     minlength="8" maxlength="20"
                                     pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$"
-                                    required>
+                                    >
                                 <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                                     <i class="bi bi-eye-slash"></i>
                                 </button>
                             </div>
                             <small class="text-warning">8-20 chars, at least one letter, number, and special char.</small>
+                            @error('password')
+                        <p class="text-danger text-sm">{{ $message }}</p>
+                    @enderror
                         </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-success">Register</button>
+            <button type="submit" class="btn btn-secondary w-100">Submit</button>
+             <div class="text-center mt-3">
+                            <a href="{{ route('roles.index') }}" class="text-black">View All Users</a>
                         </div>
-
-                        <div class="text-center mt-3">
-                            <a href="{{ route('roles.index') }}" class="text-white">View All Users</a>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
-
 <script>
     document.getElementById("togglePassword").addEventListener("click", function () {
         const password = document.getElementById("password");

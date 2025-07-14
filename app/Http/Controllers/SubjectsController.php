@@ -18,7 +18,7 @@ class SubjectsController extends Controller
         $subjects = DB::table('subjects')
             ->join('teachers', 'subjects.teacher_id', '=', 'teachers.teacher_id')
             ->select('subjects.*', 'teachers.name as teacher_name') // Select subject fields and teacher name
-            ->get();
+            ->paginate(10);
         return view('Subject.index', compact('subjects'));
     }
 
